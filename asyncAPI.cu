@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     unsigned long int counter = 0;
 
     while (cudaEventQuery(stop) == cudaErrorNotReady) {
-        counter++;
+        counter++; //this stay in the register 
     }
 
     // print the cpu and gpu times
