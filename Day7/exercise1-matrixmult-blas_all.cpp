@@ -45,8 +45,8 @@ void matrixmul_mkl_intrinsic(double* c, double* a, double* b){
     __m256d a_vec, b_vec, c_vec; // vectors with 4 double entries
     for(int i=0;i<4*4;i+=4){
   		c_vec = _mm256_load_pd(&c[i]); //Bring the line of vector c
-        	    for (int j = 1; j < 4; j++) {
-					b_vec = _mm256_load_pd(&b[j]); //Load the row of B
+        	    for (int j = 0; j < 4; j++) {
+					b_vec = _mm256_load_pd(&b[j*4]); //Load the row of B
 					a_vec = _mm256_set1_pd(a[i+j]); //Set the correspondence value 
 					c_vec = _mm256_add_pd(_mm256_mul_pd(a_vec,b_vec), c_vec); 
 				}

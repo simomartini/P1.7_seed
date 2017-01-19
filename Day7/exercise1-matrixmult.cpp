@@ -22,7 +22,7 @@ void matrixmul_mnk(double* c,double* a,double* b){
 void matrixmul_mnk_c(double* c,double* a, double* b){
 		for(int i=0; i<4; i+=1){
 			for(int j=0; j<4; j+=1){
-		//	#pragma unroll(4)
+			#pragma unroll(4)
    				for(int k=0; k<4; k+=1){
 					c[(i*4)+j]=c[(i*4)+j]+a[(i*4)+k]*b[(k*4)+j];
 				}
@@ -62,13 +62,13 @@ int main(void){
   double* a= (double*) _mm_malloc(sizeof(double)*size,64);
   double* b= (double*) _mm_malloc(sizeof(double)*size,64);
   double* c= (double*) _mm_malloc(sizeof(double)*size,64);
-  double* c_test= (double*) _mm_malloc(sizeof(double)*size,64);
+//  double* c_test= (double*) _mm_malloc(sizeof(double)*size,64);
   double time1,time2;
   for(int i=0;i<size;i++){
     a[i]=rand() %100;
     b[i]=rand() %100;
     c[i]=rand() %100;
-	c_test[i]=c[i];
+//	c_test[i]=c[i];
   }
 /*
 //--------------------------------LAPACK-----------------------------------
@@ -90,15 +90,15 @@ int main(void){
 	     for(int j=0; j<size; j+=mnk*mnk ){
     		 #pragma forceinline 
 			 matrixmul_mnk_c(&c[j],&a[j],&b[j]);   	
-        	 matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
-		     for (int k=0; k<mnk;k++){
-	    	    	for (int s=0; s<mnk;s++){
-			   //  	printf("c_test[%d %d]=%f , c[%d %d]=%f \n",k,s,c_test[k*mnk+s],k,s,c[k*mnk+s]);
-				        if (abs(c_test[k*mnk+s]-c[k*mnk+s]) > 0.001){
-						  		printf(" There is something wrong\n");
-						 }
-				}
-			}
+        //	 matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
+		  //   for (int k=0; k<mnk;k++){
+	    	//    	for (int s=0; s<mnk;s++){
+			  //   	printf("c_test[%d %d]=%f , c[%d %d]=%f \n",k,s,c_test[k*mnk+s],k,s,c[k*mnk+s]);
+				//        if (abs(c_test[k*mnk+s]-c[k*mnk+s]) > 0.001){
+		//				  		printf(" There is something wrong\n");
+				//		 }
+			//	}
+		//	}
 		}
 	}
   time2=mytime();
@@ -114,15 +114,15 @@ int main(void){
 	     for(int j=0; j<size; j+=mnk*mnk ){
     	 #pragma forceinline 
 		 matrixmul_mnk_an(&c[j],&a[j],&b[j]);   	
-		 matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
-		     for (int k=0; k<mnk;k++){
-	    	    	for (int s=0; s<mnk;s++){
+		 // matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
+		   //  for (int k=0; k<mnk;k++){
+	    	 //   	for (int s=0; s<mnk;s++){
 			//		printf("c_test[%d %d]=%f , c[%d %d]=%f \n",k,s,c_test[k*mnk+s],k,s,c[k*mnk+s]);
-				        if (c_test[k*mnk+s]-c[k*mnk+s] > 0.001){
-						  		printf("There is something wrong");
-						 }
-				}
-			}
+			//	        if (c_test[k*mnk+s]-c[k*mnk+s] > 0.001){
+			//			  		printf("There is something wrong");
+			//			 }
+			//	}
+	//		}
 		}
 	}
   time2=mytime();
@@ -136,15 +136,15 @@ int main(void){
   for(int n=0;n<iter;n++){ 
 	     for(int j=0; j<size; j+=mnk*mnk ){
 		 matrixmul_mkl_intrinsic(&c[j],&a[j],&b[j]);   	
-		 matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
-		     for (int k=0; k<mnk;k++){
-	    	    	for (int s=0; s<mnk;s++){
+	//	 matrixmul_mnk(&c_test[j],&a[j],&b[j]);   
+	//	     for (int k=0; k<mnk;k++){
+	  //  	    	for (int s=0; s<mnk;s++){
 		//			printf("c_test[%d %d]=%f , c[%d %d]=%f \n",k,s,c_test[k*mnk+s],k,s,c[k*mnk+s]);
-				        if (c_test[k*mnk+s]-c[k*mnk+s] > 0.001){
-						  		printf("There is something wrong");
-						 }
-				}
-			}
+		//		        if (c_test[k*mnk+s]-c[k*mnk+s] > 0.001){
+		//				  		printf("There is something wrong");
+		//				 }
+		//		}
+		//	}
 		}
 	 }
    	  
