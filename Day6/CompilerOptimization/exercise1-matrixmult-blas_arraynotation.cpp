@@ -20,25 +20,25 @@ void matrixmul_mnk(double* c,double* a,double* b){
 
 int main(void){
   int iter=10;
-  int nmatrices=10;
+  int nmatrices=10000;
   int size=mnk*mnk*nmatrices;
   double* a= (double*) _mm_malloc(sizeof(double)*size,64);
   double* b= (double*) _mm_malloc(sizeof(double)*size,64);
   double* c= (double*) _mm_malloc(sizeof(double)*size,64);
   double time1,time2;
-  for(int i=0;i<size;i++){
-    a[i]=rand();
-    b[i]=rand();
-    c[i]=rand();
-  }
+  //for(int i=0;i<size;i++){
+    a[0:size]=rand();
+    b[0:size]=rand();
+    c[0:size]=rand();
+ // }
   
   time1=mytime();
   for(int n=0;n<iter;n++){
-    for(int i=0;i<size;i+=mnk*mnk){
-      matrixmul_mnk(&c[i],&a[i],&b[i]);
-	  //you code goes here	
+   // for(int i=0;i<size;i+=mnk*mnk){
+	 matrixmul_mnk(&c[0:size],&a[0:size],&b[0:size]);
+	 //you code goes here	
       //matrixmul_mnk_opt1(&c[i],&a[i],&b[i]);
-    }
+   // }
   }
   time2=mytime();
 
