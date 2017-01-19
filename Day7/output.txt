@@ -1,0 +1,12 @@
+size= 1600000
+time Lapack= 0.210808 s
+perf Lapack= 0.607187 GFLOPs
+
+time c code  = 0.032406 s
+perf c code= 3.949904 GFLOPs
+
+time Array notation  = 0.025361 s
+perf Array notation= 5.047107 GFLOPs
+
+time Intrinsic  = 0.025708 s
+perf Intrinsic= 4.979003 GFLOPs
